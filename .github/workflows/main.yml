@@ -1,0 +1,23 @@
+name: Main
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: 'composer'
+
+      - name: Install dependencies
+        run: composer install --no-interaction
+
+      - name: Run tests
+        run: vendor/bin/phpunit tests

@@ -1,0 +1,66 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Ertessia\Env;
+
+use Ertessia\Env\Exception\EnvironmentVariableNotSetException;
+use Ertessia\Env\Exception\InvalidEnvironmentVariableException;
+use function is_numeric;
+use function is_string;
+use function strtolower;
+
+final class Env
+{
+    /**
+     * This method performs the actual casting of the requested environment variable. It'll first check and validate
+     * the environment variable through the use of the "has" method. If that's okay we'll try to convert it
+     * to the appropriate scalar type.
+     *
+     * If the string is a numeric string, PHP will automatically juggle the type to either an integer or a float
+     * by adding 0 to it. When there's no match, we'll just return the string value.
+     *
+     * @param string $name
+     * @throws EnvironmentVariableNotSetException
+     * @throws InvalidEnvironmentVariableException
+     * @return mixed
+     */
+    public static function get(string $name): mixed
+    {
+        if (self::has($name) === false) {
+            throw EnvironmentVariableNotSetException::ofName($name);
+        }
+
+        // If the value is a numeric string, the "+0" will convert the value to either an integer or a float.
+        if (is_numeric($_ENV[$name]) === true) {
+            return $_ENV[$name] + 0;
+        }
+
+        return match (strtolower($_ENV[$name])) {
+            'true'  => true,
+            'false' => false,
+            'null'  => null,
+            default => $_ENV[$name]
+        };
+    }
+
+    /**
+     * Environment variable values should always be a string according to the POSIX standard,
+     * therefore we'll throw an exception if the value in $_ENV is anything other than a string. In general this should
+     * never happen unless you set it explicitly.
+     *
+     * If the environment variable does not exist or if it exists but is a string, we'll just return a boolean.
+     *
+     * @param string $name
+     * @throws InvalidEnvironmentVariableException
+     * @return bool
+     */
+    public static function has(string $name): bool
+    {
+        if (isset($_ENV[$name]) === true && is_string($_ENV[$name]) === false) {
+            throw InvalidEnvironmentVariableException::ofName($name);
+        }
+
+        return isset($_ENV[$name]);
+    }
+}
