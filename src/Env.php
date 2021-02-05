@@ -31,7 +31,6 @@ final class Env
             throw EnvironmentVariableNotSetException::ofName($name);
         }
 
-        // If the value is a numeric string, the "+0" will convert the value to either an integer or a float.
         if (is_numeric($_ENV[$name]) === true) {
             return $_ENV[$name] + 0;
         }

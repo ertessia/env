@@ -12,6 +12,9 @@ composer require ertessia/env
 
 ## Usage
 
+The `Env::get` method will convert the requested environment variable into the appropriate scalar type.
+If the environment variable is not set or if it's not a string it will throw an exception.
+
 ```php
 // Based on the value of "ENV_VARIABLE_NAME", this will return the following:
 // "true" = true
@@ -23,6 +26,13 @@ composer require ertessia/env
 $result = \Ertessia\Env\Env::get('ENV_VARIABLE_NAME');
 ```
 
+The `Env::has` method checks whether the requested environment variable is and if it is a string. 
+According to the POSIX standards it should always be a string unless it's explicitly set to something else.
+
+
+```php
+$result = \Ertessia\Env\Env::has('ENV_VARIABLE_NAME');
+```
 ## Testing
 
 ```bash
