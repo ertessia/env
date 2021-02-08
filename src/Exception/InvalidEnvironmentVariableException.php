@@ -9,11 +9,12 @@ use Exception;
 final class InvalidEnvironmentVariableException extends Exception
 {
     /**
+     * InvalidEnvironmentVariableException constructor.
+     *
      * @param string $name
-     * @return self
      */
-    public static function ofName(string $name): self
+    public function __construct(string $name)
     {
-        return new self('The environment variable: ' . $name . ' should be a string.');
+        parent::__construct('The environment variable: ' . $name . ' should be a string.');
     }
 }

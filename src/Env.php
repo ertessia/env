@@ -28,7 +28,7 @@ final class Env
     public static function get(string $name): mixed
     {
         if (self::has($name) === false) {
-            throw EnvironmentVariableNotSetException::ofName($name);
+            throw new EnvironmentVariableNotSetException($name);
         }
 
         if (is_numeric($_ENV[$name]) === true) {
@@ -57,7 +57,7 @@ final class Env
     public static function has(string $name): bool
     {
         if (isset($_ENV[$name]) === true && is_string($_ENV[$name]) === false) {
-            throw InvalidEnvironmentVariableException::ofName($name);
+            throw new InvalidEnvironmentVariableException($name);
         }
 
         return isset($_ENV[$name]);
