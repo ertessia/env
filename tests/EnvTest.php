@@ -119,7 +119,7 @@ final class EnvTest extends TestCase
         $this->assertEquals('TEST', Env::raw('UPPER_CASE_STRING'));
         $this->assertEquals('another test', Env::raw('LOWER_CASE_STRING'));
         $this->assertEquals('2', Env::raw('INTEGER'));
-        $this->assertEquals('3.9', Env::raw('FLOAT'));:x!
+        $this->assertEquals('3.9', Env::raw('FLOAT'));
     }
 
     /**
