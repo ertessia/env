@@ -33,6 +33,14 @@ According to the POSIX standards it should always be a string unless it's explic
 ```php
 $result = \Ertessia\Env\Env::has('ENV_VARIABLE_NAME');
 ```
+
+If you need to get the raw variant of an environment variable, you can use the `Env::raw` method. 
+This method won't cast anything and will always return a string.
+
+```php
+$result = \Ertessia\Env\Env::raw('ENV_VARIABLE_NAME');
+```
+
 ## Testing
 
 ```bash
