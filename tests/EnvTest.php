@@ -26,15 +26,17 @@ final class EnvTest extends TestCase
         $_ENV['LOWER_CASE_STRING'] = 'another test';
         $_ENV['INTEGER'] = '2';
         $_ENV['FLOAT'] = '3.9';
+        $_ENV['NUMERIC_STRING_WITH_LEADING_ZERO'] = '01234';
 
-        $this->assertEquals(null, Env::get('LOWER_CASE_NULL'));
-        $this->assertEquals(null, Env::get('UPPER_CASE_NULL'));
-        $this->assertEquals(false, Env::get('BOOLEAN_FALSE'));
-        $this->assertEquals(true, Env::get('BOOLEAN_TRUE'));
-        $this->assertEquals('TEST', Env::get('UPPER_CASE_STRING'));
-        $this->assertEquals('another test', Env::get('LOWER_CASE_STRING'));
-        $this->assertEquals(2, Env::get('INTEGER'));
-        $this->assertEquals(3.9, Env::get('FLOAT'));
+        $this->assertSame(null, Env::get('LOWER_CASE_NULL'));
+        $this->assertSame(null, Env::get('UPPER_CASE_NULL'));
+        $this->assertSame(false, Env::get('BOOLEAN_FALSE'));
+        $this->assertSame(true, Env::get('BOOLEAN_TRUE'));
+        $this->assertSame('TEST', Env::get('UPPER_CASE_STRING'));
+        $this->assertSame('another test', Env::get('LOWER_CASE_STRING'));
+        $this->assertSame(2, Env::get('INTEGER'));
+        $this->assertSame(3.9, Env::get('FLOAT'));
+        $this->assertSame('01234', Env::get('NUMERIC_STRING_WITH_LEADING_ZERO'));
     }
 
     /**
@@ -112,14 +114,14 @@ final class EnvTest extends TestCase
         $_ENV['INTEGER'] = '2';
         $_ENV['FLOAT'] = '3.9';
 
-        $this->assertEquals('null', Env::raw('LOWER_CASE_NULL'));
-        $this->assertEquals('NULL', Env::raw('UPPER_CASE_NULL'));
-        $this->assertEquals('false', Env::raw('BOOLEAN_FALSE'));
-        $this->assertEquals('true', Env::raw('BOOLEAN_TRUE'));
-        $this->assertEquals('TEST', Env::raw('UPPER_CASE_STRING'));
-        $this->assertEquals('another test', Env::raw('LOWER_CASE_STRING'));
-        $this->assertEquals('2', Env::raw('INTEGER'));
-        $this->assertEquals('3.9', Env::raw('FLOAT'));
+        $this->assertSame('null', Env::raw('LOWER_CASE_NULL'));
+        $this->assertSame('NULL', Env::raw('UPPER_CASE_NULL'));
+        $this->assertSame('false', Env::raw('BOOLEAN_FALSE'));
+        $this->assertSame('true', Env::raw('BOOLEAN_TRUE'));
+        $this->assertSame('TEST', Env::raw('UPPER_CASE_STRING'));
+        $this->assertSame('another test', Env::raw('LOWER_CASE_STRING'));
+        $this->assertSame('2', Env::raw('INTEGER'));
+        $this->assertSame('3.9', Env::raw('FLOAT'));
     }
 
     /**

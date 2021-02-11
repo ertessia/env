@@ -32,7 +32,9 @@ final class Env
         }
 
         if (is_numeric($_ENV[$name]) === true) {
-            return $_ENV[$name] + 0;
+            return $_ENV[$name][0] === '0'
+                ? $_ENV[$name]
+                : $_ENV[$name] + 0;
         }
 
         return match (strtolower($_ENV[$name])) {
