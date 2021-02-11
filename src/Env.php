@@ -21,9 +21,9 @@ final class Env
      * by adding 0 to it. When there's no match, we'll just return the string value.
      *
      * @param string $name
-     * @throws EnvironmentVariableNotSetException
-     * @throws InvalidEnvironmentVariableException
      * @return mixed
+     * @throws InvalidEnvironmentVariableException
+     * @throws EnvironmentVariableNotSetException
      */
     public static function get(string $name): mixed
     {
@@ -36,9 +36,9 @@ final class Env
         }
 
         return match (strtolower($_ENV[$name])) {
-            'true'  => true,
+            'true' => true,
             'false' => false,
-            'null'  => null,
+            'null' => null,
             default => $_ENV[$name]
         };
     }
@@ -51,8 +51,8 @@ final class Env
      * If the environment variable does not exist or if it exists but is a string, we'll just return a boolean.
      *
      * @param string $name
-     * @throws InvalidEnvironmentVariableException
      * @return bool
+     * @throws InvalidEnvironmentVariableException
      */
     public static function has(string $name): bool
     {
@@ -61,5 +61,23 @@ final class Env
         }
 
         return isset($_ENV[$name]);
+    }
+
+    /**
+     * This method returns the raw value of the environment variable. It'll first check and validate the environment variable
+     * through the use of the "has" method.
+     *
+     * @param string $name
+     * @return string
+     * @throws EnvironmentVariableNotSetException
+     * @throws InvalidEnvironmentVariableException
+     */
+    public static function raw(string $name): string
+    {
+        if (self::has($name) === false) {
+            throw new EnvironmentVariableNotSetException($name);
+        }
+
+        return $_ENV[$name];
     }
 }
