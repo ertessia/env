@@ -103,11 +103,23 @@ final class EnvTest extends TestCase
      */
     public function test_if_environment_variable_is_correctly_returned_in_the_raw_method(): void
     {
+        $_ENV['LOWER_CASE_NULL'] = 'null';
+        $_ENV['UPPER_CASE_NULL'] = 'NULL';
+        $_ENV['BOOLEAN_FALSE'] = 'false';
+        $_ENV['BOOLEAN_TRUE'] = 'true';
         $_ENV['UPPER_CASE_STRING'] = 'TEST';
         $_ENV['LOWER_CASE_STRING'] = 'another test';
+        $_ENV['INTEGER'] = '2';
+        $_ENV['FLOAT'] = '3.9';
 
+        $this->assertEquals('null', Env::raw('LOWER_CASE_NULL'));
+        $this->assertEquals('NULL', Env::raw('UPPER_CASE_NULL'));
+        $this->assertEquals('false', Env::raw('BOOLEAN_FALSE'));
+        $this->assertEquals('true', Env::raw('BOOLEAN_TRUE'));
         $this->assertEquals('TEST', Env::raw('UPPER_CASE_STRING'));
         $this->assertEquals('another test', Env::raw('LOWER_CASE_STRING'));
+        $this->assertEquals('2', Env::raw('INTEGER'));
+        $this->assertEquals('3.9', Env::raw('FLOAT'));:x!
     }
 
     /**
